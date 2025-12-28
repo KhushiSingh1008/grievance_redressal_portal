@@ -10,7 +10,7 @@ const registerUser = async (req, res) => {
             return res.status(400).json({message: `Fill the required fields`});
         }
 
-        const userExists = await user.findOne ({email});
+        const userExists = await User.findOne ({email});
         if(userExists){
             return res.status(400).json({message: `The user already exists`});
         }
@@ -65,12 +65,14 @@ const loginUser = async (req , res) => {
 };
 
 const getMe = async (req, res) => {
-  res.status(200).json(req.user);
+
+    console.log("Inside getMe. req.user is:", req.user);
+    res.status(200).json(req.user);
 };
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '5Sd', 
+    expiresIn: '5d', 
   });
 };
 
