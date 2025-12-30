@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getComplaints, createComplaint , getComplaint } = require('../controllers/complaintController');
+const { getComplaints, createComplaint , getComplaint, updateComplaint } = require('../controllers/complaintController');
 const { protect } = require('../middleware/authMiddleware');
 
 // console.log("Is protect a function?", typeof protect);
@@ -12,6 +12,7 @@ router.route('/')
   .post(protect, createComplaint); 
 
 router.route('/:id')
-  .get(protect, getComplaint);
+  .get(protect, getComplaint)
+  .put(protect, updateComplaint);
 
 module.exports = router;

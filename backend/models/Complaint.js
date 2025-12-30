@@ -1,45 +1,50 @@
-// backend/models/Complaint.js
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const complaintSchema = mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User',
-    },
-    title: {
-      type: String,
-      required: [true, 'Title'],
-    },
-    policyNumber: {
-      type: String,
-      required: [true, 'Enter a valid policy number'], 
-    },
-    category: {
-      type: String,
-      required: [true, 'Specify the issue'],
-      enum: [
-        'Claim Issue', 
-        'Premium Payment', 
-        'Policy Document', 
-        'Update Personal Details', 
-        'Other'
-      ],
-    },
-    description: {
-      type: String,
-      required: [true, 'Please provide a description'],
-    },
-    status: {
-      type: String,
-      enum: ['Pending', 'In Progress', 'Resolved', 'Rejected'],
-      default: 'Pending',
-    },
+const complaintSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User',
   },
-  {
-    timestamps: true, 
-  }
-);
+  policyNumber: {
+    type: String,
+    required: [true, 'Please add a policy number'],
+  },
+  category: {
+    type: String,
+    required: [true, 'Please select a category'],
+    enum: ['Claim Issue', 'Premium Payment', 'Policy Document', 'Other'],
+  },
+  title: {
+    type: String,
+    required: [true, 'Please add a title'],
+  },
+  description: {
+    type: String,
+    required: [true, 'Please add a description'],
+  },
 
-module.exports = mongoose.model('Complaint', complaintSchema);
+  department: {
+    type: String,
+    required: true,
+    default: 'General Support' 
+  },
+  status: {
+    type: String,
+    required: true,
+    enum: ['Pending', 'In Progress', 'Resolved'], 
+    default: 'Pending',
+  },
+  priority: {
+    type: String,
+    enum: ['Low', 'Medium', 'High'],
+    default: 'Low',
+  },
+  adminResponse: {
+    type: String, 
+  }
+}, {
+  timestamps: true,
+})
+
+module.exports = mongoose.model('Complaint', complaintSchema)
