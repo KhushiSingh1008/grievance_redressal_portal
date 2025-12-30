@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import TicketDetail from './pages/TicketDetail'
 
 // Import the pages we just created
 import Login from './pages/Login'
@@ -15,16 +16,15 @@ function App() {
       <Router>
         <div className="container mx-auto">
           <Routes>
-            {/* When URL is /, show Login */}
             <Route path="/" element={<Login />} />
             
-            {/* When URL is /register, show Register */}
             <Route path="/register" element={<Register />} />
             
-            {/* When URL is /dashboard, show Dashboard */}
+    
             <Route path="/dashboard" element={<Dashboard />} />
+
+            <Route path="/complaint/:id" element={<TicketDetail />} />
             
-            {/* When URL is /new-complaint, show the Form */}
             <Route path="/new-complaint" element={<NewComplaint />} />
           </Routes>
         </div>

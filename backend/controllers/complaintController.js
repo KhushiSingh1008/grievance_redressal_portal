@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const Complaint = require('../models/complaint')
+const Complaint = require('../models/complaint');
 
 const getComplaints = asyncHandler(async (req,res) =>{
     if (req.user.role === 'admin'){
@@ -32,7 +32,25 @@ const createComplaint = asyncHandler(async (req, res) => {
   res.status(201).json(complaint);
 });
 
+const getComplaint = asyncHandler(async(req,res) =>{
+  const complaint = await Complaint.findById(req.params.id).populate('user', 'name email');
+
+  if(!complaint){
+    res.status(404);
+    throw new Error("Complaint not found");
+  }
+
+  if ( complaint.user._id.toString() !== req.user.id && req.user.role !== 'admin'){
+    res.status(401)
+    throw new Error ("Not authorized")
+  }
+
+  res.status(200).json(complaint);
+
+});
+
 module.exports = {
   getComplaints,
   createComplaint,
+  getComplaint,
 };

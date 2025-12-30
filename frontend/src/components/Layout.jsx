@@ -14,20 +14,25 @@ function Layout({ children }) {
 
   const menuItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { path: '/new-complaint', icon: FilePlus, label: 'New Complaint' },
+    { path: '/new-complaint', icon: FilePlus, label: 'New Issue' },
     { path: '/settings', icon: Settings, label: 'Settings' },
   ];
 
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full">
-        <div className="p-6 border-b border-gray-100">
-          <h1 className="text-xl font-bold text-blue-900">InsureTrack</h1>
-          <p className="text-xs text-gray-500 mt-1">Grievance Portal</p>
+      <div className="w-64 bg-[#111827] border-r border-gray-800 flex flex-col fixed h-full text-white">
+        <div className="p-6 border-b border-gray-800 flex items-center gap-3">
+          <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
+            <LayoutDashboard className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <h1 className="text-lg font-bold text-white">Chase Ticket</h1>
+            <p className="text-xs text-gray-400">Issue/Ticket Tracker System</p>
+          </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-4 space-y-2">
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path;
@@ -35,10 +40,10 @@ function Layout({ children }) {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
                   isActive
-                    ? 'bg-blue-900 text-white'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    ? 'bg-purple-600 text-white shadow-lg shadow-purple-900/20'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-white'
                 }`}
               >
                 <Icon className="w-5 h-5" />
@@ -48,13 +53,13 @@ function Layout({ children }) {
           })}
         </nav>
 
-        <div className="p-4 border-t border-gray-100">
+        <div className="p-4 border-t border-gray-800">
           <div className="flex items-center gap-3 px-4 py-3 mb-2">
-            <div className="w-8 h-8 rounded-full bg-blue-900 flex items-center justify-center text-white font-medium">
+            <div className="w-8 h-8 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-200 font-medium border border-purple-700">
               {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">
+              <p className="text-sm font-medium text-white truncate">
                 {user.name || 'User'}
               </p>
               <p className="text-xs text-gray-500 truncate">
@@ -64,10 +69,10 @@ function Layout({ children }) {
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-2 text-sm font-medium text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg w-full transition-colors"
+            className="flex items-center gap-3 px-4 py-2 text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg w-full transition-colors"
           >
             <LogOut className="w-5 h-5" />
-            Log Out
+            Sign Out
           </button>
         </div>
       </div>

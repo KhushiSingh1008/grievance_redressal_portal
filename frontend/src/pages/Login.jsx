@@ -49,8 +49,8 @@ function Login() {
         <div className="absolute inset-0 bg-gradient-to-br from-blue-800 to-blue-900 opacity-90"></div>
         <div className="relative z-10 text-white px-12 text-center">
             <svg className="w-20 h-20 mx-auto mb-6 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-            <h1 className="text-4xl font-bold mb-4">Secure Insurance Portal</h1>
-            <p className="text-blue-100 text-lg">Manage your policies and claims with confidence. Secure, fast, and reliable.</p>
+            <h1 className="text-4xl font-bold mb-4">Secure Issue Tracking System</h1>
+            <p className="text-blue-100 text-lg">Manage your complaints and issues on the go.</p>
         </div>
         {/* Decorative circles */}
         <div className="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-blue-700 opacity-20"></div>

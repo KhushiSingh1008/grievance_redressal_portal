@@ -14,6 +14,9 @@ app.use(cors());
 app.use('/api/users', require('./routes/userRoutes'))   // Routes are specified 
 app.use('/api/complaints', require('./routes/complaintRoutes'));
 
+const { errorHandler } = require('./middleware/errorMiddleware');
+app.use(errorHandler);
+
 app.get('/',(req,res)=>{
     res.send('Server is running');
 })
