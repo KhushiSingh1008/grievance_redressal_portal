@@ -98,7 +98,6 @@ function NewComplaint() {
               <p className="mt-1 text-sm text-gray-500">Enter your insurance policy number</p>
             </div>
 
-            {/* Category */}
             <div>
               <label htmlFor="category" className="block text-sm font-medium text-gray-900 mb-2">
                 Category
@@ -128,7 +127,6 @@ function NewComplaint() {
               <p className="mt-1 text-sm text-gray-500">Choose the category that best describes your issue</p>
             </div>
 
-            {/* Title / Subject */}
             <div>
               <label htmlFor="title" className="block text-sm font-medium text-gray-900 mb-2">
                 Title / Subject
@@ -146,7 +144,6 @@ function NewComplaint() {
               <p className="mt-1 text-sm text-gray-500">Provide a concise title for your complaint</p>
             </div>
 
-            {/* Description */}
             <div>
               <label htmlFor="description" className="block text-sm font-medium text-gray-900 mb-2">
                 Description
@@ -159,11 +156,10 @@ function NewComplaint() {
                 required
                 rows="6"
                 className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all resize-none"
-                placeholder="Please provide detailed information about your issue, including relevant dates, amounts, and any steps you've already taken..."
+                placeholder="Please provide detailed information about your issue"
               ></textarea>
             </div>
 
-            {/* Submit Button */}
             <div className="pt-4">
               <button
                 type="submit"

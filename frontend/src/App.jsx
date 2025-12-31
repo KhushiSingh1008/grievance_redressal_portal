@@ -4,11 +4,12 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import TicketDetail from './pages/TicketDetail'
 
-// Import the pages we just created
+
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import NewComplaint from './pages/NewComplaint'
+
 
 function App() {
   return (

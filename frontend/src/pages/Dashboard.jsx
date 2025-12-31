@@ -44,7 +44,7 @@ function Dashboard() {
 
       const response = await axios.get('/api/complaints', config);
       
-      // Map backend data to frontend structure
+  
       const mappedTickets = response.data.map(ticket => ({
         id: ticket._id,
         policyNumber: ticket.policyNumber,
@@ -104,8 +104,8 @@ function Dashboard() {
 
   const bottomCards = [
     {
-      title: "Submit New Issue",
-      desc: "Report a problem to local administration",
+      title: "Repport a new issue",
+      desc: "Report a problem you are facing",
       icon: Plus,
       action: () => navigate("/new-complaint"),
       color: "text-indigo-600",
@@ -132,7 +132,6 @@ function Dashboard() {
   return (
     <Layout>
       <div className="p-8 bg-gray-50 min-h-screen">
-        {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-1">Welcome back, {user.name}</h1>
@@ -157,7 +156,6 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat) => {
             const Icon = stat.icon;
@@ -176,14 +174,12 @@ function Dashboard() {
                   <h2 className="text-3xl font-bold mb-1">{stat.value}</h2>
                   <p className="text-xs opacity-75">{stat.subtext}</p>
                 </div>
-                {/* Decorative circle */}
                 <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
               </div>
             );
           })}
         </div>
 
-        {/* Recent Tickets Table */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden mb-8">
           <div className="px-6 py-5 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -291,7 +287,6 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Bottom Action Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {bottomCards.map((card, index) => {
             const Icon = card.icon;

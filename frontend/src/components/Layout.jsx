@@ -20,7 +20,6 @@ function Layout({ children }) {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
       <div className="w-64 bg-[#111827] border-r border-gray-800 flex flex-col fixed h-full text-white">
         <div className="p-6 border-b border-gray-800 flex items-center gap-3">
           <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center">
@@ -76,8 +75,6 @@ function Layout({ children }) {
           </button>
         </div>
       </div>
-
-      {/* Main Content */}
       <div className="flex-1 ml-64">
         {children}
       </div>

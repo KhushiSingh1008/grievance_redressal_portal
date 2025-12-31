@@ -12,15 +12,14 @@ function Login() {
   const { email, password } = formData
   const navigate = useNavigate()
 
-  // Clear data on load
   useEffect(() => {
     localStorage.removeItem('user')
   }, [])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
+      ...prevState,                       // Before entering the new field the previous one will be stored
+      [e.target.name]: e.target.value,    //Computed property name [ES6]
     }))
   }
 
@@ -29,8 +28,7 @@ function Login() {
 
     try {
       const userData = { email, password }
-      // This connects to YOUR Backend!
-      const response = await axios.post('/api/users/login', userData)
+      const response = await axios.post('/api/users/login', userData)   //talks to the backend
 
       if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data))
@@ -44,7 +42,6 @@ function Login() {
 
   return (
     <div className="min-h-screen flex bg-gray-50">
-      {/* Left Side - Branding/Image */}
       <div className="hidden lg:flex lg:w-1/2 bg-blue-900 justify-center items-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-800 to-blue-900 opacity-90"></div>
         <div className="relative z-10 text-white px-12 text-center">
@@ -52,12 +49,10 @@ function Login() {
             <h1 className="text-4xl font-bold mb-4">Secure Issue Tracking System</h1>
             <p className="text-blue-100 text-lg">Manage your complaints and issues on the go.</p>
         </div>
-        {/* Decorative circles */}
         <div className="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-blue-700 opacity-20"></div>
         <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-blue-500 opacity-20"></div>
       </div>
 
-      {/* Right Side - Login Form */}
       <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-20 xl:px-24 bg-white">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div className="text-center lg:text-left">
@@ -67,7 +62,7 @@ function Login() {
             <p className="mt-2 text-sm text-gray-600">
               Or{' '}
               <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
-                register for a new account
+                Register for a new account
               </Link>
             </p>
           </div>
@@ -89,7 +84,7 @@ function Login() {
                       value={email}
                       onChange={onChange}
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      placeholder="you@example.com"
+                      placeholder="email_id"
                     />
                   </div>
                 </div>
@@ -108,7 +103,7 @@ function Login() {
                       value={password}
                       onChange={onChange}
                       className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                      placeholder="••••••••"
+                      placeholder="******"
                     />
                   </div>
                 </div>

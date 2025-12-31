@@ -8,3 +8,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <App />
   </React.StrictMode>,
 )
+
+// ReactDOM.render(<React.StrictMode>
+//   <App />
+// </React.StrictMode>,document.getElementById("root"))
+
+//The new createRoot method enables React's Concurrent Mode, 
+// allowing features like Automatic Batching and Transitions, 
+// which significantly improve performance and user experience."
