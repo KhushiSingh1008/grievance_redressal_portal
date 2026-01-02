@@ -13,12 +13,10 @@ function TicketDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  // New State
   const [status, setStatus] = useState('');
   const [adminNote, setAdminNote] = useState('');
 
-  // Admin Check
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem('user'));   // this checks if the user is admin and if yes then shows all ticket
   const isAdmin = user?.email === 'admin@issuechase.com';
 
   useEffect(() => {
@@ -72,6 +70,25 @@ function TicketDetail() {
     }
   };
 
+  const onDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this ticket?')) {
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        };
+
+        await axios.delete(`/api/complaints/${id}`, config);
+
+        toast.success('Ticket Deleted Successfully');
+        navigate('/dashboard');
+      } catch (error) {
+        toast.error(error.response?.data?.message || 'Failed to delete ticket');
+      }
+    }
+  };
+
   if (loading) {
     return (
       <Layout>
@@ -103,12 +120,12 @@ function TicketDetail() {
 
   if (!ticket) return null;
 
-  // Progress Bar Logic
+  
   const steps = ['Pending', 'In Progress', 'Resolved'];
   const currentStepIndex = steps.indexOf(ticket.status) === -1 ? 0 : steps.indexOf(ticket.status);
   const progressPercentage = ((currentStepIndex) / (steps.length - 1)) * 100;
 
-  // Smart Logic to pick an agent based on category
+
   const getAssignee = (category) => {
     if (category === 'Premium Payment') return { name: 'Alex Finance', dept: 'Billing Department' };
     if (category === 'Claim Issue') return { name: 'Maria Santos', dept: 'Claims Department' };
@@ -120,7 +137,7 @@ function TicketDetail() {
   return (
     <Layout>
       <div className="p-8 max-w-7xl mx-auto">
-        {/* Back Button */}
+      
         <button
           onClick={() => navigate('/dashboard')}
           className="flex items-center text-gray-500 hover:text-gray-700 mb-6 transition-colors"
@@ -129,7 +146,7 @@ function TicketDetail() {
           Back to Dashboard
         </button>
 
-        {/* Header Section */}
+        
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
             <div>
@@ -145,7 +162,7 @@ function TicketDetail() {
             </div>
           </div>
 
-          {/* Progress Bar */}
+        
           <div className="mb-2">
             <div className="flex justify-between text-sm font-medium text-gray-600 mb-2">
               <span>Status Progress</span>
@@ -168,10 +185,10 @@ function TicketDetail() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Main Content Column */}
+          
           <div className="lg:col-span-2 space-y-6">
             
-            {/* Issue Description Card */}
+            
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Issue Description</h2>
               <div className="space-y-4">
@@ -200,7 +217,17 @@ function TicketDetail() {
               </div>
             </div>
 
-            {/* Attachments Card (Placeholder) */}
+            
+            {ticket.adminResponse && (
+              <div className="bg-blue-50 rounded-xl border border-blue-200 shadow-sm p-6">
+                <h2 className="text-lg font-semibold text-blue-900 mb-4">Admin Response</h2>
+                <div className="bg-white p-4 rounded-lg border border-blue-100">
+                  <p className="text-gray-800 whitespace-pre-wrap">{ticket.adminResponse}</p>
+                </div>
+              </div>
+            )}
+
+            
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Attachments</h2>
               <h3>No attachments attached (yet to be implemented)</h3>
@@ -208,7 +235,7 @@ function TicketDetail() {
               </div>
             </div>
 
-            {/* ADMIN ACTION PANEL */}
+        
             {isAdmin && (
               <div className="bg-indigo-50 rounded-xl border border-indigo-200 shadow-sm p-6">
                 <h2 className="text-lg font-bold text-indigo-900 mb-4">Admin Action Panel</h2>
@@ -244,12 +271,24 @@ function TicketDetail() {
               </div>
             )}
 
+            
+            {(isAdmin || (user._id === ticket.user?._id && ticket.status === 'Pending')) && (
+              <div className="mt-6">
+                <button
+                  onClick={onDelete}
+                  className="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 transition-colors shadow-md flex items-center justify-center"
+                >
+                  Delete Ticket
+                </button>
+              </div>
+            )}
+
           </div>
 
-          {/* Sidebar Column */}
+          
           <div className="space-y-6">
             
-            {/* Assigned To Card */}
+          
             <div className="mb-6">
             <h3 className="text-sm font-medium text-gray-500 mb-3">ASSIGNED TO</h3>
             <div className="flex items-center">
@@ -263,16 +302,16 @@ function TicketDetail() {
             </div>
             </div>
 
-            {/* Reporter Contact Card */}
+            
             <div className="mb-6">
             <h3 className="text-sm font-medium text-gray-500 mb-3">REPORTER CONTACT</h3>
             <div className="flex items-center mb-3">
                 <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold mr-3">
-                {/* Show first letter of Name */}
+                
                 {ticket.user?.name?.charAt(0)}
                 </div>
                 <div>
-                {/* Real Name */}
+              
                 <p className="text-sm font-medium text-gray-900">{ticket.user?.name}</p>
                 <p className="text-xs text-gray-500">Policy Holder</p>
                 </div>
@@ -281,14 +320,14 @@ function TicketDetail() {
             <div className="space-y-2 text-sm text-gray-600">
                 <div className="flex items-center">
                 <Mail className="mr-2 text-gray-400 w-4 h-4" />
-                {/* Real Email */}
+            
                 <span>{ticket.user?.email}</span>
                 </div>
                 {/* We don't have phone number in DB yet, so we can hide this or keep dummy */}
             </div>
             </div>
 
-            {/* Status History Card */}
+          
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">Status History</h2>
               <div className="relative pl-4 border-l-2 border-gray-100 space-y-6">
@@ -298,7 +337,7 @@ function TicketDetail() {
                   <p className="text-xs text-gray-500">{new Date(ticket.createdAt).toLocaleString()}</p>
                   <p className="text-xs text-gray-400 mt-1">Issue reported by user</p>
                 </div>
-                {/* Placeholder history items */}
+                
                 {ticket.status !== 'Pending' && (
                    <div className="relative">
                     <div className="absolute -left-[21px] top-1 w-3 h-3 rounded-full border-2 border-blue-500 bg-white"></div>

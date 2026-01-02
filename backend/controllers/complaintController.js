@@ -55,7 +55,6 @@ const createComplaint = asyncHandler(async (req, res) => {
 })
 
 const getComplaint = asyncHandler(async (req, res) => {
-  // Populate to get user details
   const complaint = await Complaint.findById(req.params.id).populate('user', 'name email')
 
   if (!complaint) {
@@ -101,9 +100,36 @@ const updateComplaint = asyncHandler(async (req, res) => {
   res.status(200).json(updatedComplaint)
 })
 
+const deleteComplaint = asyncHandler(async (req, res) => {
+  const complaint = await Complaint.findById(req.params.id)
+
+  if (!complaint) {
+    res.status(404)
+    throw new Error('Complaint not found')
+  }
+
+  const isAdmin = req.user.email === 'admin@issuechase.com'
+  const isOwner = complaint.user.toString() === req.user.id
+
+  if (!isAdmin && !isOwner) {
+    res.status(401)
+    throw new Error('Not authorized')
+  }
+
+  if (!isAdmin && isOwner && complaint.status !== 'Pending') {
+    res.status(400)
+    throw new Error('Cannot delete active ticket')
+  }
+
+  await complaint.deleteOne()
+
+  res.status(200).json({ id: req.params.id })
+})
+
 module.exports = {
   getComplaints,
   createComplaint,
   getComplaint,
   updateComplaint,
+  deleteComplaint,
 };
